@@ -1,12 +1,12 @@
-📜 Project Flow — Node.js + SPA + Docker + WireGuard VPN
+📜 Project Flow — Node.js + React + Docker + WireGuard VPN
 📖 Overview
 This project is a full-stack application consisting of:
 
-Frontend SPA (React or Vue)
+Frontend React
 
 Backend API (Node.js + Express)
 
-Database (PostgreSQL/MySQL/MongoDB inside Docker)
+Database MongoDB inside Docker
 
 WireGuard VPN (Docker container) for secure remote access
 
@@ -15,18 +15,15 @@ Home Server (runs Docker containers for backend services)
 The system is designed so the SPA can be accessed remotely through a secure VPN tunnel, with all backend services containerized and isolated.
 
 🗂 Project Structure
-plaintext
-Copy
-Edit
+
 /my-app
-├── client/                  # SPA frontend (React/Vue)
+├── client/                  # SPA frontend React
 │   ├── public/               # index.html (entry point), static files
 │   ├── src/                  # SPA source code
 │   │   ├── App.js            # Root component
 │   │   ├── components/       # Reusable UI components
 │   │   ├── pages/            # Page-level components
 │   │   ├── services/         # API calls to backend
-│   │   └── ...
 │   └── package.json
 │
 ├── server/                  # Backend Node.js API
@@ -43,7 +40,7 @@ Edit
 └── README.md
 🔁 Project Flow
 1. Frontend (SPA) Flow
-User opens SPA in browser (https://myapp.com or via VPN IP)
+User opens SPA in browser (https://myapp.com)
 
 SPA loads index.html + bundled JS/CSS
 
@@ -79,9 +76,6 @@ Hosted separately (e.g., CDN, Nginx container).
 
 Example docker-compose.yml services:
 
-yaml
-Copy
-Edit
 services:
   backend:
     build: ./server
@@ -116,39 +110,24 @@ Once connected, the laptop is virtually inside the home server network.
 SPA and backend API are accessible via internal Docker network IPs or mapped ports (e.g., http://172.18.0.5:3000).
 
 5. Full End-to-End Flow
-plaintext
-Copy
-Edit
 Browser SPA → API Request (/api/...) → Node.js API (Express) → Database (Docker)
 Browser SPA ← JSON Response ← Node.js API ← Database
 (Entire traffic secured through WireGuard VPN tunnel)
 📦 Development Flow
 Start backend locally:
 
-bash
-Copy
-Edit
 cd server && npm run dev
 Start SPA dev server:
 
-bash
-Copy
-Edit
 cd client && npm start
 API requests from SPA to backend use a proxy (package.json → proxy: "http://localhost:3000")
 
 Docker containers can be spun up for DB + VPN during dev:
 
-bash
-Copy
-Edit
 docker compose up
 🚀 Production Deployment
 Build SPA:
 
-bash
-Copy
-Edit
 cd client && npm run build
 Copy SPA build output into backend public/ or serve from Nginx.
 
@@ -164,3 +143,4 @@ Configure WireGuard peers with unique keys
 Only expose necessary ports in docker-compose.yml
 
 Consider Nginx reverse proxy for SSL termination
+
